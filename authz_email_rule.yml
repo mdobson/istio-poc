@@ -1,0 +1,13 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: "restrict-by-email-ingress"
+  namespace: apps
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  rules:
+    - when:
+        - key: request.auth.claims[email]
+          values: ["matt@api-coach.com"]

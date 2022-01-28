@@ -1,0 +1,12 @@
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: jwt-authentication
+  namespace: apps
+spec:
+  jwtRules:
+    - issuer: https://accounts.google.com
+      jwksUri: https://www.googleapis.com/oauth2/v3/certs
+      forwardOriginalToken: true
+      audiences:
+        - 32555940559.apps.googleusercontent.com # google token generator
