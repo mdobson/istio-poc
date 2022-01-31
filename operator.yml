@@ -1,0 +1,25 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  name: istio-operator-config
+spec:
+  profile: default
+  meshConfig:
+    accessLogFile: /dev/stdout
+  components:
+    ingressGateways:
+      # disable default gateway
+      - name: istio-ingressgateway
+        namespace: istio-system
+        enabled: false
+      - name: first-ingress
+        namespace: istio-system
+        enabled: true
+        label:
+          istio: first-ingress
+      - name: second-ingress
+        namespace: istio-system
+        enabled: true
+        label:
+          istio: second-ingress

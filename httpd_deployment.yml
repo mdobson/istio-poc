@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: apps
+  name: httpd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: apps
+  name: httpd
+  labels:
+    app: httpd
+    service: httpd
+spec:
+  ports:
+    - port: 80
+      name: http
+  selector:
+    app: httpd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd
+  namespace: apps
+  labels:
+    app: httpd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpd
+  template:
+    metadata:
+      labels:
+        app: httpd
+    spec:
+      containers:
+        - name: httpd
+          image: httpd:2.4.52
+          ports:
+            - containerPort: 80

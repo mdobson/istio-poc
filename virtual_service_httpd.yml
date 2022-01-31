@@ -1,0 +1,31 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: httpd-gateway
+spec:
+  selector:
+    istio: second-ingress
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: httpd-route
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - httpd-gateway
+  http:
+    - name: "httpd-route"
+      route:
+        - destination:
+            host: httpd.apps.svc.cluster.local
+            port:
+              number: 80

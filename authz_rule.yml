@@ -2,8 +2,11 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: "frontend-ingress"
-  namespace: apps
+  namespace: istio-system
 spec:
+  selector:
+    matchLabels:
+      istio: first-ingress
   action: DENY
   rules:
     - from:
